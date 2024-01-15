@@ -12,6 +12,7 @@ function throwError() {
 
 function Home() {
   const [count, setCount] = useState(0)
+  const [reset, setReset] = useState(0) // P787d
   const increment = useCallback(() => {
     setCount((v) => v + 1)
   }, [setCount])
@@ -25,6 +26,11 @@ function Home() {
       clearInterval(r)
     }
   }, [increment])
+
+  const handleReset = useCallback(() => { // Pe911
+    setCount(0)
+    setReset((v) => v + 1)
+  }, [setCount, setReset])
 
   return (
     <main className={styles.main}>
@@ -45,7 +51,7 @@ function Home() {
       <hr className={styles.hr} />
       <div>
         <p>Component with state.</p>
-        <ClickCount />
+        <ClickCount reset={reset} /> // P5cb9
       </div>
       <hr className={styles.hr} />
       <div>
@@ -64,6 +70,10 @@ function Home() {
         </Button>
       </div>
       <hr className={styles.hr} />
+      <div> // P01c0
+        <p>The button below will reset the state of the counter and the click count component.</p>
+        <Button onClick={handleReset}>Reset State</Button> // P638a
+      </div>
     </main>
   )
 }
